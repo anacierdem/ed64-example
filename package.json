@@ -1,0 +1,17 @@
+{
+  "name": "ed64-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "libdragon install",
+    "prepublish": "npm run init",
+    "build": "libdragon make"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ed64": "^0.1.4",
+    "libdragon": "^1.1.3"
+  }
+}
