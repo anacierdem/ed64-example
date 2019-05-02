@@ -6,6 +6,10 @@
 #include <libdragon.h>
 #include <libed64.h>
 
+/* vblank callback - this will not break reboot */
+void vblCallback(void) __attribute__((section(".text.after")));
+void vblCallback(void) {}
+
 int main(void)
 {
     long int count = 0;
@@ -19,6 +23,7 @@ int main(void)
     display_init( res, bit, 2, GAMMA_NONE, ANTIALIAS_RESAMPLE );
 
     everdrive_init(true);
+    register_VI_handler(vblCallback);
 
     while(1)
     {
