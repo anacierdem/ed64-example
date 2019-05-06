@@ -5,8 +5,8 @@ MKDFSPATH = $(ROOTDIR)/bin/mkdfs
 HEADERPATH = $(ROOTDIR)/mips64-elf/lib
 N64TOOL = $(ROOTDIR)/bin/n64tool
 HEADERNAME = header
-LINK_FLAGS = -G0 -L$(ROOTDIR)/mips64-elf/lib -led64 -ldragon -lc -lm -ldragonsys -Tn64ld.x
-CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -G0 -Wall -I$(ROOTDIR)/mips64-elf/include
+LINK_FLAGS = -G0 -L$(ROOTDIR)/mips64-elf/lib -led64 -ldragon -lc -lstdc++ -lm -ldragonsys -Tnaci.ld
+CFLAGS = -std=c++11 -march=vr4300 -mtune=vr4300 -O2 -G0 -Wall -I$(ROOTDIR)/mips64-elf/include
 ASFLAGS = -mtune=vr4300 -march=vr4300
 CC = $(GCCN64PREFIX)gcc
 AS = $(GCCN64PREFIX)as
@@ -31,7 +31,7 @@ $(PROG_NAME)$(ROM_EXTENSION): $(PROG_NAME).elf
 	$(N64TOOL) $(N64_FLAGS) -t "ED64"
 	$(CHKSUM64PATH) $(PROG_NAME)$(ROM_EXTENSION)
 
-$(PROG_NAME).o: $(SOURCE_PATH)/main.c
+$(PROG_NAME).o: $(SOURCE_PATH)/main.cpp
 	mkdir -p $(BUILD_PATH)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
@@ -39,6 +39,9 @@ $(PROG_NAME).elf: $(PROG_NAME).o
 	$(LD) -o $@ $^ $(LINK_FLAGS)
 
 all: $(PROG_NAME)$(ROM_EXTENSION)
+
+install:
+	install -m 0644 naci.ld /usr/local/mips64-elf/lib/naci.ld
 
 .PHONY: clean
 
