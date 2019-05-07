@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "init": "libdragon install",
-    "prepublish": "npm run init",
+    "prepare": "npm run init",
     "build": "libdragon make"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ed64": "^0.1.6"
+    "ed64": "^0.1.9"
   }
 }
