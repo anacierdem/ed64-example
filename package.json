@@ -4,15 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "libdragon install",
     "stop": "libdragon stop",
     "start": "libdragon start",
-    "prepare": "npm run init",
+    "prepare": "libdragon install",
     "build": "libdragon make"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ed64": "^0.1.21"
+    "ed64": "^0.2.1"
   }
 }
