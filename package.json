@@ -6,12 +6,13 @@
   "scripts": {
     "stop": "libdragon stop",
     "start": "libdragon start",
-    "prepare": "libdragon install",
+    "prepare": "libdragon init",
     "build": "libdragon make"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ed64": "^1.2.2"
+    "ed64": "^1.2.2",
+    "libdragon": "^6.0.1"
   }
 }

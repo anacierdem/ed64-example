@@ -1,46 +1,18 @@
-ROOTDIR = $(N64_INST)
-GCCN64PREFIX = $(ROOTDIR)/bin/mips64-elf-
-CHKSUM64PATH = $(ROOTDIR)/bin/chksum64
-MKDFSPATH = $(ROOTDIR)/bin/mkdfs
-HEADERPATH = $(ROOTDIR)/mips64-elf/lib
-N64TOOL = $(ROOTDIR)/bin/n64tool
-HEADERNAME = header
-LINK_FLAGS = -L$(ROOTDIR)/mips64-elf/lib -led64 -ldragon -lc -lm -ldragonsys -Tn64.ld
-CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -I$(ROOTDIR)/mips64-elf/include
-ASFLAGS = -mtune=vr4300 -march=vr4300
-CC = $(GCCN64PREFIX)gcc
-AS = $(GCCN64PREFIX)as
-LD = $(GCCN64PREFIX)ld
-OBJCOPY = $(GCCN64PREFIX)objcopy
+V=1
+BUILD_DIR=build
+SOURCE_DIR=src
+include n64.mk
 
-BUILD_PATH = $(CURDIR)/build
-SOURCE_PATH = $(CURDIR)/src
-PROG_NAME = $(BUILD_PATH)/main
+src=main.c
 
-N64_FLAGS = -l 2M -h $(HEADERPATH)/$(HEADERNAME) -o $(PROG_NAME)$(ROM_EXTENSION) $(PROG_NAME).bin
-ifeq ($(N64_BYTE_SWAP),true)
-ROM_EXTENSION = .v64
-N64_FLAGS = -b $(N64_FLAGS)
-else
-ROM_EXTENSION = .z64
-endif
+all: main.z64
 
-$(PROG_NAME)$(ROM_EXTENSION): $(PROG_NAME).elf
-	$(OBJCOPY) $(PROG_NAME).elf $(PROG_NAME).bin -O binary
-	rm -f $(PROG_NAME)$(ROM_EXTENSION)
-	$(N64TOOL) $(N64_FLAGS) -t "ED64"
-	$(CHKSUM64PATH) $(PROG_NAME)$(ROM_EXTENSION)
-
-$(PROG_NAME).o: $(SOURCE_PATH)/main.c
-	mkdir -p $(BUILD_PATH)
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-$(PROG_NAME).elf: $(PROG_NAME).o
-	$(LD) -o $@ $^ $(LINK_FLAGS)
-
-all: $(PROG_NAME)$(ROM_EXTENSION)
-
-.PHONY: clean
+main.z64: N64_ROM_TITLE="Testbench"
+$(BUILD_DIR)/main.elf: $(src:%.c=$(BUILD_DIR)/%.o)
 
 clean:
-	rm -rf $(BUILD_PATH)/*
+	rm -f $(BUILD_DIR)/* main.z64
+
+-include $(wildcard $(BUILD_DIR)/*.d)
+
+.PHONY: all clean
