@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/node_modules/ed64/loader.js",
-            "args": ["./build/main.z64", "--keep-alive"],
+            "args": ["./main.z64", "--keep-alive"],
             "preLaunchTask": "build",
             "outputCapture": "std",
             "internalConsoleOptions": "openOnSessionStart"

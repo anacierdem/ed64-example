@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ed64": "^1.2.2",
-    "libdragon": "^6.0.1"
+    "ed64": "^2.0.3",
+    "libdragon": "^10.0.0"
   }
 }
